@@ -6,8 +6,10 @@ import dotenv from 'dotenv';
 import { query } from './db';
 
 dotenv.config();
+
 const app = express();
-const port = process.env.PORT || 5000;
+// Force explicit number parsing right away
+const port: number = parseInt(process.env.PORT || '5000', 10);
 
 app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
 app.use(express.json());
@@ -50,6 +52,7 @@ app.post('/api/groups/join', async (req, res) => {
   }
 });
 
-server.listen(port, '0.0.0.0', () => {
-  console.log(`🚀 AuraBoard Backend operational on: http://127.0.0.1:${port}`);
+// Use absolute simplest method signature to remove parameter overload bugs completely
+server.listen(port, () => {
+  console.log(`🚀 AuraBoard Backend operational on port: ${port}`);
 });
